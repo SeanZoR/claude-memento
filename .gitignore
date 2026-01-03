@@ -1,0 +1,30 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+.idea/
+.vscode/
+*.sublime-*
+
+# Local Claude files
+*.local.md
+*.local.json
+.credentials.json
+
+# Node modules (for future MCP development)
+node_modules/
+dist/
+*.log
+
+# Python (for future development)
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Test coverage
+coverage/
+.nyc_output/

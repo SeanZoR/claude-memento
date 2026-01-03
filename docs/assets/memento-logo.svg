@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" width="120" height="120">
+  <!-- Brain shape -->
+  <circle cx="60" cy="60" r="50" fill="#8B5CF6" opacity="0.9"/>
+
+  <!-- Memory nodes -->
+  <circle cx="45" cy="45" r="8" fill="#C4B5FD"/>
+  <circle cx="75" cy="45" r="8" fill="#C4B5FD"/>
+  <circle cx="60" cy="70" r="8" fill="#C4B5FD"/>
+
+  <!-- Connections -->
+  <line x1="45" y1="45" x2="75" y2="45" stroke="#E9D5FF" stroke-width="3"/>
+  <line x1="45" y1="45" x2="60" y2="70" stroke="#E9D5FF" stroke-width="3"/>
+  <line x1="75" y1="45" x2="60" y2="70" stroke="#E9D5FF" stroke-width="3"/>
+
+  <!-- Center dot -->
+  <circle cx="60" cy="52" r="4" fill="#FFFFFF"/>
+</svg>
