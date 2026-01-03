@@ -1,4 +1,13 @@
-<h1 align="center">Memento</h1>
+<p align="center">
+<pre align="center">
+███╗   ███╗███████╗███╗   ███╗███████╗███╗   ██╗████████╗ ██████╗
+████╗ ████║██╔════╝████╗ ████║██╔════╝████╗  ██║╚══██╔══╝██╔═══██╗
+██╔████╔██║█████╗  ██╔████╔██║█████╗  ██╔██╗ ██║   ██║   ██║   ██║
+██║╚██╔╝██║██╔══╝  ██║╚██╔╝██║██╔══╝  ██║╚██╗██║   ██║   ██║   ██║
+██║ ╚═╝ ██║███████╗██║ ╚═╝ ██║███████╗██║ ╚████║   ██║   ╚██████╔╝
+╚═╝     ╚═╝╚══════╝╚═╝     ╚═╝╚══════╝╚═╝  ╚═══╝   ╚═╝    ╚═════╝
+</pre>
+</p>
 
 <p align="center">
   <strong>Extract session memories into CLAUDE.md</strong><br>
@@ -6,8 +15,8 @@
 </p>
 
 <p align="center">
-  <a href="https://github.com/SeanZoR/memento/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
-  <a href="https://github.com/SeanZoR/memento/stargazers"><img src="https://img.shields.io/github/stars/SeanZoR/memento?style=social" alt="GitHub stars"></a>
+  <a href="https://github.com/SeanZoR/claude-memento/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a>
+  <a href="https://github.com/SeanZoR/claude-memento/stargazers"><img src="https://img.shields.io/github/stars/SeanZoR/claude-memento?style=social" alt="GitHub stars"></a>
   <a href="https://claude.ai"><img src="https://img.shields.io/badge/Claude-Code-blueviolet" alt="Claude Code"></a>
 </p>
 
@@ -43,16 +52,25 @@ Sound familiar?
 
 ### Installation
 
+**One-liner (recommended):**
+```bash
+mkdir -p ~/.claude/commands && curl -fsSL https://raw.githubusercontent.com/SeanZoR/claude-memento/main/.claude/commands/memento.md -o ~/.claude/commands/memento.md
+```
+
+<details>
+<summary>Alternative: Clone the repo</summary>
+
 ```bash
 # Clone the repository
-git clone https://github.com/SeanZoR/memento.git
+git clone https://github.com/SeanZoR/claude-memento.git
 
-# Install globally (recommended)
-cp memento/.claude/commands/memento.md ~/.claude/commands/
+# Install globally
+cp claude-memento/.claude/commands/memento.md ~/.claude/commands/
 
 # Or install for a specific project
-cp memento/.claude/commands/memento.md /path/to/your/project/.claude/commands/
+cp claude-memento/.claude/commands/memento.md /path/to/your/project/.claude/commands/
 ```
+</details>
 
 ### Usage
 
@@ -204,7 +222,7 @@ We're building Memento into a comprehensive memory toolkit for Claude Code:
 - [ ] **Memento Sync** - Backup and restore your Claude memories across machines
 - [ ] **Memento Skills** - Pre-built memory extraction for specific workflows
 
-See the [roadmap discussion](https://github.com/SeanZoR/memento/discussions) for more details and to contribute ideas.
+See the [roadmap discussion](https://github.com/SeanZoR/claude-memento/discussions) for more details and to contribute ideas.
 
 ---
 
