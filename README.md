@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="docs/assets/memento-logo.png" alt="Memento Logo" width="120" />
-</p>
-
 <h1 align="center">Memento</h1>
 
 <p align="center">
@@ -71,10 +67,6 @@ That's it! Memento will analyze your conversation and present actionable suggest
 ---
 
 ## How It Works
-
-<p align="center">
-  <img src="docs/assets/memento-flow.png" alt="Memento Flow" width="600" />
-</p>
 
 ### 1. Analyze
 Memento reviews your conversation looking for:
