@@ -39,8 +39,13 @@ curl -fsSL https://raw.githubusercontent.com/SeanZoR/claude-memento/main/.claude
 Run at the end of any Claude Code session to capture learnings into your CLAUDE.md files.
 
 ```
-/memento
+/memento [--project PATH] [--user PATH]
 ```
+
+| Argument | Description |
+|----------|-------------|
+| `--project PATH` | Custom project memory location (default: `./CLAUDE.md`) |
+| `--user PATH` | Custom user memory location (default: `~/.claude/CLAUDE.md`) |
 
 **What it does:**
 - Analyzes your conversation for mistakes, corrections, and preferences
@@ -55,6 +60,20 @@ Claude: npm install
 You: No, use pnpm in this project
 ```
 → Extracts: *"Use pnpm instead of npm for package management"*
+
+<details>
+<summary>Custom Paths Configuration</summary>
+
+For persistent custom paths, add to `~/.claude/CLAUDE.md`:
+
+```markdown
+## Memento Config
+- PROJECT_PATH: ./docs/CLAUDE.md
+- USER_PATH: ~/custom/CLAUDE.md
+```
+
+Priority: Command arguments > Config > Defaults
+</details>
 
 ---
 
