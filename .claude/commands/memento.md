@@ -4,7 +4,31 @@ description: Extract session memories into CLAUDE.md - because Claude forgets, b
 
 # Memento
 
+Usage: `/memento [--project PATH] [--user PATH]`
+
 Analyze this conversation to extract **actionable** memory updates for CLAUDE.md files.
+
+## Step 0: Resolve Paths
+
+**Default paths:**
+- Project Memory: `./CLAUDE.md`
+- User Memory: `~/.claude/CLAUDE.md`
+
+**Override via arguments:**
+- `--project PATH` - custom project memory location
+- `--user PATH` - custom user memory location
+
+**Override via config (persistent):**
+Check `~/.claude/CLAUDE.md` for a `## Memento Config` section:
+```
+## Memento Config
+- PROJECT_PATH: ./docs/CLAUDE.md
+- USER_PATH: ~/custom/CLAUDE.md
+```
+
+**Priority:** Arguments > Config > Defaults
+
+Store resolved paths as `$PROJECT_PATH` and `$USER_PATH` for use in subsequent steps.
 
 ## Step 1: Analyze the Session
 
@@ -31,12 +55,12 @@ Review the conversation for:
 
 ### Where suggestions go:
 
-**Project Memory (./CLAUDE.md)** - PREFER THIS when:
+**Project Memory (`$PROJECT_PATH`)** - PREFER THIS when:
 - In a specific project folder (not home/general directory)
 - Convention is specific to this codebase
 - Tool/file structure is project-specific
 
-**User Memory (~/.claude/CLAUDE.md)** - Use when:
+**User Memory (`$USER_PATH`)** - Use when:
 - Preference applies across ALL projects
 - It's about how the user likes to work generally
 - It's a Claude Code tip that's universally useful
@@ -66,13 +90,13 @@ Example structure:
   "questions": [
     {
       "header": "Project Memory",
-      "question": "Which insights should I add to ./CLAUDE.md?",
+      "question": "Which insights should I add to $PROJECT_PATH?",
       "multiSelect": true,
       "options": [...]
     },
     {
       "header": "User Memory",
-      "question": "Which insights should I add to ~/.claude/CLAUDE.md?",
+      "question": "Which insights should I add to $USER_PATH?",
       "multiSelect": true,
       "options": [...]
     }
@@ -95,10 +119,10 @@ For each selected suggestion:
 ## Output Format
 
 ```
-✅ Added to ./CLAUDE.md:
+✅ Added to $PROJECT_PATH:
 - [suggestion]
 
-✅ Added to ~/.claude/CLAUDE.md:
+✅ Added to $USER_PATH:
 - [suggestion]
 ```
 
