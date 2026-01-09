@@ -13,6 +13,9 @@ Thumbs.db
 *.local.md
 *.local.json
 .credentials.json
+.mcp.json
+.playwright-mcp/
+images/
 
 # Node modules (for future MCP development)
 node_modules/
