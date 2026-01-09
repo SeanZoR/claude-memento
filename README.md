@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <strong>Extract session memories into CLAUDE.md</strong><br>
+  <strong>Memory tools for Claude Code</strong><br>
   <em>Because Claude forgets, but your notes don't.</em>
 </p>
 
@@ -22,8 +22,8 @@
 
 <p align="center">
   <a href="#-quick-start">Quick Start</a> •
-  <a href="#-how-it-works">How It Works</a> •
-  <a href="#-examples">Examples</a> •
+  <a href="#-memento-command">Memento</a> •
+  <a href="#-brag-command">Brag</a> •
   <a href="#-roadmap">Roadmap</a> •
   <a href="#-contributing">Contributing</a>
 </p>
@@ -54,8 +54,12 @@ Sound familiar?
 
 **One-liner (recommended):**
 ```bash
-mkdir -p ~/.claude/commands && curl -fsSL https://raw.githubusercontent.com/SeanZoR/claude-memento/main/.claude/commands/memento.md -o ~/.claude/commands/memento.md
+mkdir -p ~/.claude/commands && \
+curl -fsSL https://raw.githubusercontent.com/SeanZoR/claude-memento/main/.claude/commands/memento.md -o ~/.claude/commands/memento.md && \
+curl -fsSL https://raw.githubusercontent.com/SeanZoR/claude-memento/main/.claude/commands/brag.md -o ~/.claude/commands/brag.md
 ```
+
+This installs both `/memento` and `/brag` commands.
 
 <details>
 <summary>Alternative: Clone the repo</summary>
@@ -64,36 +68,42 @@ mkdir -p ~/.claude/commands && curl -fsSL https://raw.githubusercontent.com/Sean
 # Clone the repository
 git clone https://github.com/SeanZoR/claude-memento.git
 
-# Install globally
-cp claude-memento/.claude/commands/memento.md ~/.claude/commands/
-
-# Or install for a specific project
-cp claude-memento/.claude/commands/memento.md /path/to/your/project/.claude/commands/
+# Install both commands globally
+cp claude-memento/.claude/commands/*.md ~/.claude/commands/
 ```
 </details>
 
-### Usage
+### What You Get
 
-At the end of any Claude Code session, simply run:
+| Command | Purpose |
+|---------|---------|
+| `/memento` | Extract session learnings into CLAUDE.md |
+| `/brag` | Generate social content ideas from sessions |
+
+---
+
+## `/memento` Command
+
+Extract actionable insights from your Claude Code sessions into CLAUDE.md files.
+
+### Usage
 
 ```
 /memento
 ```
 
-That's it! Memento will analyze your conversation and present actionable suggestions.
+Run at the end of any session to capture learnings.
 
----
+### How It Works
 
-## How It Works
-
-### 1. Analyze
+#### 1. Analyze
 Memento reviews your conversation looking for:
 - Mistakes Claude made and corrections you provided
 - Preferences you expressed (explicit or implicit)
 - Project conventions discovered
 - Reusable learnings
 
-### 2. Categorize
+#### 2. Categorize
 Suggestions are filtered for **actionability** and sorted into:
 
 | Category | Location | Purpose |
@@ -101,7 +111,7 @@ Suggestions are filtered for **actionability** and sorted into:
 | **Project Memory** | `./CLAUDE.md` | Conventions specific to this codebase |
 | **User Memory** | `~/.claude/CLAUDE.md` | Preferences across all projects |
 
-### 3. Select & Apply
+#### 3. Select & Apply
 You choose which suggestions to keep via an interactive multi-select prompt:
 
 ```
@@ -184,17 +194,70 @@ See more examples in the [examples/](examples/) directory.
 
 ---
 
+## `/brag` Command
+
+Turn your coding sessions into social media content ideas. Generate a beautiful HTML page with shareable moments from your recent work.
+
+### Usage
+
+```
+/brag [days] [--notion]
+```
+
+**Arguments:**
+- `days` - Number of days to scan (default: 14)
+- `--notion` - Enable Notion integration (requires config)
+
+**Examples:**
+```
+/brag           # Last 14 days
+/brag 7         # Last 7 days
+/brag --notion  # With Notion push
+```
+
+### What It Does
+
+1. **Scans sessions** from `~/.claude/projects/*/` for the last N days
+2. **Pattern matches** for shareable moments (shipped, fixed, built, discovered, struggled)
+3. **Analyzes** each moment for social media potential
+4. **Generates** an interactive HTML page with content ideas
+
+### Output
+
+Opens a webpage with:
+- Moments ranked by shareability
+- LinkedIn angles (professional, story-driven)
+- X/Twitter angles (punchy, hot takes)
+- Category filters (shipped, fixed, built, etc.)
+- Copy buttons for each suggestion
+
+### Notion Integration (Optional)
+
+To push moments to Notion as drafts, add to `~/.claude/CLAUDE.md`:
+
+```markdown
+## Session-Social Config
+- NOTION_TOKEN: your_notion_integration_token
+- NOTION_DATABASE_ID: your_database_id
+```
+
+Then use the `--notion` flag.
+
+---
+
 ## Architecture
 
 ```
 memento/
 ├── .claude/
 │   └── commands/
-│       └── memento.md      # The command implementation
+│       ├── memento.md         # Memory extraction command
+│       └── brag.md  # Social content ideas command
 ├── docs/
-│   ├── architecture.md     # Technical deep-dive
-│   └── assets/             # Images and diagrams
-├── examples/               # Example scenarios
+│   ├── architecture.md        # Technical deep-dive
+│   ├── brag.md      # Detailed brag docs
+│   └── assets/                # Images and diagrams
+├── examples/                  # Example scenarios
 └── README.md
 ```
 
@@ -214,7 +277,8 @@ Memento intelligently categorizes suggestions to the appropriate file based on w
 We're building Memento into a comprehensive memory toolkit for Claude Code:
 
 ### Current
-- [x] `/memento` command for end-of-session memory extraction
+- [x] `/memento` - End-of-session memory extraction
+- [x] `/brag` - Generate social content ideas from sessions
 
 ### Planned
 - [ ] **Memento MCP Server** - Retrospective analysis across all past sessions
