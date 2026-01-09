@@ -20,332 +20,134 @@
   <a href="https://claude.ai"><img src="https://img.shields.io/badge/Claude-Code-blueviolet" alt="Claude Code"></a>
 </p>
 
-<p align="center">
-  <a href="#-quick-start">Quick Start</a> •
-  <a href="#-memento-command">Memento</a> •
-  <a href="#-brag-command">Brag</a> •
-  <a href="#-roadmap">Roadmap</a> •
-  <a href="#-contributing">Contributing</a>
-</p>
-
 ---
 
-## The Problem
+## Install
 
-**Claude has no memory between sessions.** Every time you start a new conversation, it's a blank slate. You've probably noticed yourself repeating the same instructions:
-
-- *"Use pnpm, not npm"*
-- *"Tests go in `__tests__/` folders"*
-- *"I prefer TypeScript over JavaScript"*
-
-Sound familiar?
-
-## The Solution
-
-**Memento** is a Claude Code command that analyzes your coding sessions and extracts actionable insights into your `CLAUDE.md` files. Future Claude sessions automatically read these files, giving Claude "memory" of your preferences and project conventions.
-
-> *Like Leonard in the film [Memento](https://en.wikipedia.org/wiki/Memento_(film)), Claude has no memory. This tool helps you leave notes for future Claude.*
-
----
-
-## Quick Start
-
-### Installation
-
-**One-liner (recommended):**
 ```bash
 mkdir -p ~/.claude/commands && \
 curl -fsSL https://raw.githubusercontent.com/SeanZoR/claude-memento/main/.claude/commands/memento.md -o ~/.claude/commands/memento.md && \
 curl -fsSL https://raw.githubusercontent.com/SeanZoR/claude-memento/main/.claude/commands/brag.md -o ~/.claude/commands/brag.md
 ```
 
-This installs both `/memento` and `/brag` commands.
-
-<details>
-<summary>Alternative: Clone the repo</summary>
-
-```bash
-# Clone the repository
-git clone https://github.com/SeanZoR/claude-memento.git
-
-# Install both commands globally
-cp claude-memento/.claude/commands/*.md ~/.claude/commands/
-```
-</details>
-
-### What You Get
-
-| Command | Purpose |
-|---------|---------|
-| `/memento` | Extract session learnings into CLAUDE.md |
-| `/brag` | Generate social content ideas from sessions |
-
 ---
 
-## `/memento` Command
+## Commands
 
-Extract actionable insights from your Claude Code sessions into CLAUDE.md files.
+### `/memento` — Extract session memories
 
-### Usage
+Run at the end of any Claude Code session to capture learnings into your CLAUDE.md files.
 
 ```
 /memento
 ```
 
-Run at the end of any session to capture learnings.
+**What it does:**
+- Analyzes your conversation for mistakes, corrections, and preferences
+- Filters for actionable insights only
+- Sorts into Project Memory (`./CLAUDE.md`) vs User Memory (`~/.claude/CLAUDE.md`)
+- Lets you pick which suggestions to keep
 
-### How It Works
-
-#### 1. Analyze
-Memento reviews your conversation looking for:
-- Mistakes Claude made and corrections you provided
-- Preferences you expressed (explicit or implicit)
-- Project conventions discovered
-- Reusable learnings
-
-#### 2. Categorize
-Suggestions are filtered for **actionability** and sorted into:
-
-| Category | Location | Purpose |
-|----------|----------|---------|
-| **Project Memory** | `./CLAUDE.md` | Conventions specific to this codebase |
-| **User Memory** | `~/.claude/CLAUDE.md` | Preferences across all projects |
-
-#### 3. Select & Apply
-You choose which suggestions to keep via an interactive multi-select prompt:
-
+**Example:**
 ```
-┌─ Project Memory ──────────────────────────────────────────┐
-│ ☑ Use pnpm instead of npm for package management          │
-│ ☑ Run tests with `pnpm test:unit` not `npm test`          │
-│ ☐ API endpoints are in src/routes/                        │
-└───────────────────────────────────────────────────────────┘
-
-┌─ User Memory ─────────────────────────────────────────────┐
-│ ☑ Always show the command before executing it             │
-│ ☐ Prefer functional components over class components      │
-└───────────────────────────────────────────────────────────┘
-```
-
-Selected suggestions are appended to the appropriate `CLAUDE.md` file.
-
----
-
-## What Makes a Good Suggestion
-
-Memento is designed to surface **actionable** insights - things that will actually change Claude's behavior in future sessions:
-
-| ✅ Actionable | ❌ Not Actionable |
-|--------------|-------------------|
-| "Use pnpm, not npm in this project" | "Check package manager" |
-| "Tests are in `__tests__/` folders" | "This was a good session" |
-| "Always show command before running" | "Be more careful" |
-| "This project uses Tailwind CSS" | "Consider using CSS frameworks" |
-| "Database migrations are in `prisma/`" | "Database stuff is important" |
-
-### The Actionability Test
-
-A suggestion is actionable if it:
-1. **Changes behavior** - Would make Claude do something differently
-2. **Is specific** - Clear enough to apply without interpretation
-3. **Prevents mistakes** - Would have avoided an error in this session
-
----
-
-## Examples
-
-### Example 1: Package Manager Correction
-
-**Session snippet:**
-```
-User: Install the dependencies
+You: Install the dependencies
 Claude: npm install
-User: No, use pnpm in this project
-Claude: pnpm install
+You: No, use pnpm in this project
 ```
-
-**Memento suggestion:**
-> ✅ Project Memory: "Use pnpm instead of npm for package management"
-
-### Example 2: Testing Convention
-
-**Session snippet:**
-```
-User: Where are the tests?
-Claude: Looking in /tests...
-User: They're in __tests__ folders next to the source files
-```
-
-**Memento suggestion:**
-> ✅ Project Memory: "Tests are colocated in `__tests__/` folders, not a root `/tests` directory"
-
-### Example 3: User Preference
-
-**Session snippet:**
-```
-User: Wait, show me the command before you run it
-Claude: Sure! Here's what I'll run: git push origin main
-```
-
-**Memento suggestion:**
-> ✅ User Memory: "Always display commands before executing them"
-
-See more examples in the [examples/](examples/) directory.
+→ Extracts: *"Use pnpm instead of npm for package management"*
 
 ---
 
-## `/brag` Command
+### `/brag` — Generate social content ideas
 
-Turn your coding sessions into social media content ideas. Generate a beautiful HTML page with shareable moments from your recent work.
-
-### Usage
+Scan your recent sessions for shareable moments and generate content ideas for LinkedIn and X/Twitter.
 
 ```
 /brag [days] [--notion]
 ```
 
-**Arguments:**
-- `days` - Number of days to scan (default: 14)
-- `--notion` - Enable Notion integration (requires config)
+| Argument | Description |
+|----------|-------------|
+| `days` | Number of days to scan (default: 14) |
+| `--notion` | Push selected moments to Notion as drafts |
 
 **Examples:**
 ```
 /brag           # Last 14 days
 /brag 7         # Last 7 days
-/brag --notion  # With Notion push
+/brag --notion  # With Notion integration
 ```
 
-### What It Does
+**What it finds:**
+- 🚀 **Shipped** — Deployments, launches, PRs merged
+- 🐛 **Fixed** — Bugs squashed, issues resolved
+- 💡 **Discovered** — TILs, new learnings
+- 🔧 **Built** — New tools, features, commands
+- 🤯 **Struggled** — Debugging war stories, rabbit holes
 
-1. **Scans sessions** from `~/.claude/projects/*/` for the last N days
-2. **Pattern matches** for shareable moments (shipped, fixed, built, discovered, struggled)
-3. **Analyzes** each moment for social media potential
-4. **Generates** an interactive HTML page with content ideas
+**Output:** Opens an interactive HTML page with content angles for each platform.
 
-### Output
+<details>
+<summary>Notion Integration Setup</summary>
 
-Opens a webpage with:
-- Moments ranked by shareability
-- LinkedIn angles (professional, story-driven)
-- X/Twitter angles (punchy, hot takes)
-- Category filters (shipped, fixed, built, etc.)
-- Copy buttons for each suggestion
-
-### Notion Integration (Optional)
-
-To push moments to Notion as drafts, add to `~/.claude/CLAUDE.md`:
+Add to `~/.claude/CLAUDE.md`:
 
 ```markdown
-## Session-Social Config
+## Brag Config
 - NOTION_TOKEN: your_notion_integration_token
 - NOTION_DATABASE_ID: your_database_id
 ```
 
-Then use the `--notion` flag.
+Then use `/brag --notion` to push moments as drafts.
+</details>
 
 ---
 
-## Architecture
+## Why Memento?
 
-```
-memento/
-├── .claude/
-│   └── commands/
-│       ├── memento.md         # Memory extraction command
-│       └── brag.md  # Social content ideas command
-├── docs/
-│   ├── architecture.md        # Technical deep-dive
-│   ├── brag.md      # Detailed brag docs
-│   └── assets/                # Images and diagrams
-├── examples/                  # Example scenarios
-└── README.md
-```
+**Claude has no memory between sessions.** Every new conversation starts from scratch. You've probably caught yourself repeating:
 
-### How CLAUDE.md Works
+- *"Use pnpm, not npm"*
+- *"Tests go in `__tests__/` folders"*
+- *"Always show the command before running it"*
 
-Claude Code automatically reads `CLAUDE.md` files at the start of each session:
+Memento fixes this by helping you build up CLAUDE.md files that Claude automatically reads at the start of each session.
 
-1. **Project-level** (`./CLAUDE.md`) - Instructions for the current codebase
-2. **User-level** (`~/.claude/CLAUDE.md`) - Your personal preferences across all projects
+> *Like Leonard in the film [Memento](https://en.wikipedia.org/wiki/Memento_(film)), Claude has no memory. This tool helps you leave notes for future Claude.*
 
-Memento intelligently categorizes suggestions to the appropriate file based on whether the insight is project-specific or universal.
+---
+
+## How CLAUDE.md Works
+
+Claude Code automatically reads these files at session start:
+
+| File | Scope |
+|------|-------|
+| `./CLAUDE.md` | Project-specific conventions |
+| `~/.claude/CLAUDE.md` | Your preferences across all projects |
+
+Memento intelligently categorizes suggestions to the right file.
 
 ---
 
 ## Roadmap
 
-We're building Memento into a comprehensive memory toolkit for Claude Code:
-
-### Current
-- [x] `/memento` - End-of-session memory extraction
-- [x] `/brag` - Generate social content ideas from sessions
-
-### Planned
-- [ ] **Memento MCP Server** - Retrospective analysis across all past sessions
-- [ ] **Memento Dashboard** - Web UI to browse and manage memories
-- [ ] **Memento Sync** - Backup and restore your Claude memories across machines
-- [ ] **Memento Skills** - Pre-built memory extraction for specific workflows
-
-See the [roadmap discussion](https://github.com/SeanZoR/claude-memento/discussions) for more details and to contribute ideas.
+- [x] `/memento` — Session memory extraction
+- [x] `/brag` — Social content ideas
+- [ ] **Memento MCP** — Retrospective analysis across all past sessions
+- [ ] **Memento Sync** — Backup and restore memories across machines
 
 ---
 
 ## Contributing
 
-We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
-
-### Ways to Contribute
-- Report bugs and suggest features
-- Improve documentation
-- Add example scenarios
-- Help build the MCP server and dashboard
-
----
-
-## FAQ
-
-<details>
-<summary><strong>Why not just edit CLAUDE.md manually?</strong></summary>
-
-You can! Memento is designed to make it easier by:
-- Surfacing insights you might forget to document
-- Formatting suggestions consistently
-- Categorizing into project vs. user memory automatically
-</details>
-
-<details>
-<summary><strong>Does this send my data anywhere?</strong></summary>
-
-No. Memento runs entirely locally within your Claude Code session. It analyzes your conversation and writes to local files. No data is sent to external servers.
-</details>
-
-<details>
-<summary><strong>Can I customize what Memento looks for?</strong></summary>
-
-The current version uses a fixed analysis prompt. Customization options are planned for future releases.
-</details>
-
-<details>
-<summary><strong>What if I accidentally add something wrong?</strong></summary>
-
-Simply edit the `CLAUDE.md` file directly to remove or modify any entry. It's just a markdown file.
-</details>
-
----
-
-## Acknowledgments
-
-- Inspired by the film [Memento](https://en.wikipedia.org/wiki/Memento_(film)) (2000)
-- Built for [Claude Code](https://claude.ai/code) by Anthropic
-- Thanks to all contributors and early adopters
+We welcome contributions! See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) for details.
-
----
+MIT — see [LICENSE](LICENSE)
 
 <p align="center">
   <sub>Built with 🧠 by <a href="https://github.com/SeanZoR">Sean</a></sub>
